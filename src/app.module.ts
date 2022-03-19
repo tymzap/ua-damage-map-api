@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import environment from 'environment';
 import { getConnectionOptions } from 'typeorm';
+import { DamageReportModule } from './damage-report/damage-report.module';
 
 @Module({
   imports: [
@@ -21,8 +21,8 @@ import { getConnectionOptions } from 'typeorm';
         logging: 'all',
       }),
     }),
+    DamageReportModule,
   ],
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
