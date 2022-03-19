@@ -1,1 +1,1 @@
-FROM postgres:13
+FROM postgis/postgis:13-master

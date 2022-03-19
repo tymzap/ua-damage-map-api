@@ -9,6 +9,6 @@ async function bootstrap() {
     },
   });
   const configService: ConfigService<Environment> = app.get(ConfigService);
-  await app.listen(configService.get('PORT'));
+  await app.listen(configService.get('PORT')!);
 }
 bootstrap();
