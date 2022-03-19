@@ -1,7 +1,7 @@
 import { DamageDegree } from 'damage-report/damage-degree.enum';
 
-export type DamageReport = {
+export class DamageReportDto {
   latitude: number;
   longitude: number;
   damageDegree: `${DamageDegree}`;
-};
+}

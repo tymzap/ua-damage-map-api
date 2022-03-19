@@ -6,25 +6,30 @@ import {
 import { CreateDamageReportDto } from 'damage-report/dto/create-damage-report.dto';
 
 import { DamageReportService } from 'damage-report/damage-report.service';
-import { DamageReportEntity } from 'damage-report/damage-report.entity';
+import type { DamageReportDto } from 'damage-report/dto/damage-report.dto';
 
 @Controller('damage-report')
 export class DamageReportController {
   constructor(private readonly damageReportService: DamageReportService) {}
 
   @Get()
-  getDamageReports(): Promise<DamageReportEntity[]> {
-    return this.damageReportService.getDamageReports();
+  async getDamageReports(): Promise<DamageReportDto[]> {
+    const damageReportEntities =
+      await this.damageReportService.getDamageReports();
+    return damageReportEntities.map((damageReportEntity) =>
+      damageReportEntity.getDTO(),
+    );
   }
 
   @Post()
   async createDamageReport(
     @Body() data: CreateDamageReportDto,
     @RequestIp() requestIp: RequestIpParam,
-  ): Promise<DamageReportEntity> {
-    return this.damageReportService.createDamageReport({
+  ): Promise<DamageReportDto> {
+    const newDamageReport = await this.damageReportService.createDamageReport({
       ...data,
       reporterIp: requestIp || undefined,
     });
+    return newDamageReport.getDTO();
   }
 }
