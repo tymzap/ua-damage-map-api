@@ -28,6 +28,7 @@ export class DamageReportEntity extends BaseEntity<DamageReportDto> {
 
   getDTO(): DamageReportDto {
     return {
+      id: this.id,
       damageDegree: this.damageDegree,
       latitude: this.point.coordinates[0],
       longitude: this.point.coordinates[1],
