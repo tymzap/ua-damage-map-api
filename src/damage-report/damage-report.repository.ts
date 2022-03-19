@@ -25,6 +25,7 @@ export class DamageReportRepository {
           coordinates: [data.latitude, data.longitude],
         },
         reporterIp: data.reporterIp,
+        description: data.description,
       },
     );
     return this.entityManager.save(newDamageReport);
