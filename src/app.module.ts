@@ -1,10 +1,10 @@
-import { Module } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import environment from 'environment';
 import { getConnectionOptions } from 'typeorm';
 import { DamageReportModule } from './damage-report/damage-report.module';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -23,6 +23,11 @@ import { DamageReportModule } from './damage-report/damage-report.module';
     }),
     DamageReportModule,
   ],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ],
 })
 export class AppModule {}
