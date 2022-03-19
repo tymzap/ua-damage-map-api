@@ -1,5 +1,11 @@
 import { DamageDegree } from 'damage-report/damage-degree.enum';
-import { IsNumber, IsNotEmpty, IsEnum } from 'class-validator';
+import {
+  IsNumber,
+  IsNotEmpty,
+  IsEnum,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateDamageReportDto {
   @IsNumber()
@@ -13,4 +19,8 @@ export class CreateDamageReportDto {
   @IsEnum(DamageDegree)
   @IsNotEmpty()
   damageDegree: `${DamageDegree}`;
+
+  @IsString()
+  @MaxLength(500)
+  description: string;
 }

@@ -5,4 +5,5 @@ export class DamageReportDto {
   latitude: number;
   longitude: number;
   damageDegree: `${DamageDegree}`;
+  description: string | null;
 }

@@ -27,7 +27,10 @@ export class DamageReportController {
     @RequestIp() requestIp: RequestIpParam,
   ): Promise<DamageReportDto> {
     const newDamageReport = await this.damageReportService.createDamageReport({
-      ...data,
+      latitude: data.latitude,
+      longitude: data.longitude,
+      damageDegree: data.damageDegree,
+      description: data.description,
       reporterIp: requestIp || undefined,
     });
     return newDamageReport.getDTO();

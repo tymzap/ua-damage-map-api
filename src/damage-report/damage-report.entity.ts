@@ -24,6 +24,12 @@ export class DamageReportEntity extends BaseEntity<DamageReportDto> {
     type: 'text',
     nullable: true,
   })
+  description: string;
+
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   reporterIp: string | null;
 
   getDTO(): DamageReportDto {
@@ -32,6 +38,7 @@ export class DamageReportEntity extends BaseEntity<DamageReportDto> {
       damageDegree: this.damageDegree,
       latitude: this.point.coordinates[0],
       longitude: this.point.coordinates[1],
+      description: this.description || null,
     };
   }
 }
