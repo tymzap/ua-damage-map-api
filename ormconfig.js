@@ -1,10 +1,10 @@
 const { SnakeNamingStrategy } = require('typeorm-naming-strategies');
 
-const environment = require('./environment');
+const { DATABASE_URL, NODE_ENV } = require('./environment');
 
 module.exports = {
   type: 'postgres',
-  url: environment.DATABASE_URL,
+  url: DATABASE_URL,
   migrations: ['dist/migrations/*.js'],
   entities: ['dist/**/*.entity.js'],
   seeds: ['dist/**/*.seeder.js'],
@@ -15,7 +15,7 @@ module.exports = {
   namingStrategy: new SnakeNamingStrategy(),
   migrationsTableName: 'typeorm_migration',
   extra: {
-    ...(environment.NODE_ENV === 'production' && {
+    ...(NODE_ENV === 'production' && {
       ssl: {
         rejectUnauthorized: false,
       },
