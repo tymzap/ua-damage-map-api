@@ -5,8 +5,9 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AppService {
-  getHello(): string {
-    console.log(joi, _);
-    return `test3`;
+  getHello(): object {
+    return {
+      test: 'test',
+    };
   }
 }
