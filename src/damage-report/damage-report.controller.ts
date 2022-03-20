@@ -16,9 +16,10 @@ export class DamageReportController {
   async getDamageReports(): Promise<DamageReportDto[]> {
     const damageReportEntities =
       await this.damageReportService.getDamageReports();
-    return damageReportEntities.map((damageReportEntity) =>
-      damageReportEntity.getDTO(),
-    );
+    return damageReportEntities.map(({ entity, features }) => ({
+      ...entity.getDTO(),
+      ...features,
+    }));
   }
 
   @Post()

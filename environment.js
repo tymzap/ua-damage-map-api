@@ -10,6 +10,7 @@ const validationSchema = joi.object({
     .default('development'),
   PORT: joi.number().default(3000),
   DATABASE_URL: joi.string().required(),
+  MAPBOX_KEY: joi.string().required(),
 });
 
 const validatedEnvironment = validationSchema.validate(process.env, {

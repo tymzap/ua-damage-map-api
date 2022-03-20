@@ -5,6 +5,7 @@ import environment from 'environment';
 import { getConnectionOptions } from 'typeorm';
 import { DamageReportModule } from './damage-report/damage-report.module';
 import { APP_PIPE } from '@nestjs/core';
+import { GlobalModule } from './global.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { APP_PIPE } from '@nestjs/core';
       }),
     }),
     DamageReportModule,
+    GlobalModule,
   ],
   providers: [
     {
