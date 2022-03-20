@@ -123,7 +123,9 @@ export class DamageReportService {
       query: {
         type: 'address',
         bbox: `${minLon},${minLat},${maxLon},${maxLat}`,
+        fuzzyMatch: false,
         routing: true,
+        country: 'ua',
         access_token: mapboxKey,
       },
     });
