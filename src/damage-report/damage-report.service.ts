@@ -76,6 +76,7 @@ export class DamageReportService {
     });
   }
 
+  // todo move getLocationsInBoundingBox method to abstract service about geolocation
   async getLocationsInBoundingBox(params: {
     searchText: string;
     bbox: {
@@ -95,8 +96,8 @@ export class DamageReportService {
     const url = this.buildForwardGeocodingUrl(params);
     const { data } = await firstValueFrom(this.httpService.get(url));
     return data.features.map((feature) => ({
-      latitude: feature.geometry.coordinates[0],
-      longitude: feature.geometry.coordinates[1],
+      latitude: feature.geometry.coordinates[1],
+      longitude: feature.geometry.coordinates[0],
       name: feature.place_name,
       category: feature.properties?.category || undefined,
     }));
@@ -118,7 +119,7 @@ export class DamageReportService {
     const mapboxKey = this.configService.get<string>('MAPBOX_KEY');
     return url.format({
       host: 'https://api.mapbox.com/geocoding/v5/mapbox.places/',
-      pathname: `${searchText}.json`,
+      pathname: `${searchText.trim()}.json`,
       query: {
         type: 'address',
         bbox: `${minLon},${minLat},${maxLon},${maxLat}`,
