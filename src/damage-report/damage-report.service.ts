@@ -76,6 +76,58 @@ export class DamageReportService {
     });
   }
 
+  async getLocationsInBoundingBox(params: {
+    searchText: string;
+    bbox: {
+      minLon: number;
+      minLat: number;
+      maxLon: number;
+      maxLat: number;
+    };
+  }): Promise<
+    Array<{
+      latitude: number;
+      longitude: number;
+      name: string;
+      category?: string;
+    }>
+  > {
+    const url = this.buildForwardGeocodingUrl(params);
+    const { data } = await firstValueFrom(this.httpService.get(url));
+    return data.features.map((feature) => ({
+      latitude: feature.geometry.coordinates[0],
+      longitude: feature.geometry.coordinates[1],
+      name: feature.place_name,
+      category: feature.properties?.category || undefined,
+    }));
+  }
+
+  private buildForwardGeocodingUrl(params: {
+    searchText: string;
+    bbox: {
+      minLon: number;
+      minLat: number;
+      maxLon: number;
+      maxLat: number;
+    };
+  }): string {
+    const {
+      searchText,
+      bbox: { minLon, minLat, maxLon, maxLat },
+    } = params;
+    const mapboxKey = this.configService.get<string>('MAPBOX_KEY');
+    return url.format({
+      host: 'https://api.mapbox.com/geocoding/v5/mapbox.places/',
+      pathname: `${searchText}.json`,
+      query: {
+        type: 'address',
+        bbox: `${minLon},${minLat},${maxLon},${maxLat}`,
+        routing: true,
+        access_token: mapboxKey,
+      },
+    });
+  }
+
   createDamageReport(
     data: CreateDamageReportDto & { reporterIp?: string },
   ): Promise<DamageReportEntity> {

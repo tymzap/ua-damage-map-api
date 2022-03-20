@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query } from '@nestjs/common';
 import {
   RequestIp,
   RequestIpParam,
@@ -7,6 +7,7 @@ import { CreateDamageReportDto } from 'damage-report/dto/create-damage-report.dt
 
 import { DamageReportService } from 'damage-report/damage-report.service';
 import type { DamageReportDto } from 'damage-report/dto/damage-report.dto';
+import type { AvailablePlaceDto } from 'damage-report/dto/available-place.dto';
 
 @Controller('damage-report')
 export class DamageReportController {
@@ -19,6 +20,31 @@ export class DamageReportController {
     return damageReportEntities.map(({ entity, features }) => ({
       ...entity.getDTO(),
       ...features,
+    }));
+  }
+
+  @Get('available-place')
+  // todo replace query parsing in getAvailablePlaces with class validator and do it type-safe
+  async getAvailablePlaces(@Query() query: any): Promise<AvailablePlaceDto[]> {
+    const searchText = query.searchText;
+    const minLon = parseFloat(query.minLon);
+    const maxLon = parseFloat(query.maxLon);
+    const minLat = parseFloat(query.minLat);
+    const maxLat = parseFloat(query.maxLat);
+    return (
+      await this.damageReportService.getLocationsInBoundingBox({
+        searchText,
+        bbox: {
+          minLon,
+          minLat,
+          maxLat,
+          maxLon,
+        },
+      })
+    ).map((location) => ({
+      ...location,
+      placeName: location.name,
+      placeCategory: location.category || null,
     }));
   }
 
