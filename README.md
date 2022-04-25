@@ -6,15 +6,16 @@ Hackathon4Ukraine](facebook.com/events/1132043360669520).
 
 ```bash
 $ yarn install
+
+$ yarn build
 ```
 
 ## Running the app
 
 ```bash
-# development
 $ yarn start
 
-# watch mode
+# development mode
 $ yarn start:dev
 
 # production mode
