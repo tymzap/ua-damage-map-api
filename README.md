@@ -13,8 +13,6 @@ $ yarn build
 ## Running the app
 
 ```bash
-$ yarn start
-
 # development mode
 $ yarn start:dev
 
